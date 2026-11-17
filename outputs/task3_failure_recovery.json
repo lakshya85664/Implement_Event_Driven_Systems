@@ -1,0 +1,101 @@
+{
+    "recovery": {
+        "success": true,
+        "attempts": 3,
+        "result": {
+            "status": "success",
+            "calls": 3
+        },
+        "next_action": "continue_workflow",
+        "trace": [
+            {
+                "attempt": 1,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": 1.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 2,
+                "outcome": "retryable_failure",
+                "error_type": "TransientDependencyError",
+                "error": "Temporary dependency failure",
+                "backoff_seconds": 2.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 3,
+                "outcome": "success",
+                "next_action": "continue"
+            }
+        ]
+    },
+    "event_replay": {
+        "first_delivery_accepted": true,
+        "duplicate_delivery_accepted": false,
+        "next_action": "ignore_duplicate_event"
+    },
+    "payment_replay": {
+        "first_payment": {
+            "order_id": "ORD-3001",
+            "amount": 3500,
+            "payment_id": "PAY-ORD-3001",
+            "status": "completed",
+            "replayed": false,
+            "next_action": "continue_workflow"
+        },
+        "replay_payment": {
+            "order_id": "ORD-3001",
+            "amount": 3500,
+            "payment_id": "PAY-ORD-3001",
+            "status": "completed",
+            "replayed": true,
+            "next_action": "return_cached_result"
+        },
+        "payment_side_effect_count": 1
+    },
+    "permanent_failure": {
+        "success": false,
+        "error_type": "PermanentDependencyError",
+        "next_action": "quarantine_and_review",
+        "attempts": 1
+    },
+    "malformed_response": {
+        "success": false,
+        "error_type": "MalformedResponseError",
+        "next_action": "quarantine_and_review",
+        "attempts": 1
+    },
+    "retry_exhaustion": {
+        "success": false,
+        "attempts": 3,
+        "next_action": "operator_review",
+        "trace": [
+            {
+                "attempt": 1,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": 1.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 2,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": 2.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 3,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": null,
+                "next_action": "operator_review"
+            }
+        ]
+    }
+}

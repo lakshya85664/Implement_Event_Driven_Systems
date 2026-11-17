@@ -1,0 +1,163 @@
+============================================================
+TASK 2 - EVENT-DRIVEN ORDER FULFILLMENT
+============================================================
+{
+    "run_id": "RUN-ORD-2001",
+    "order_id": "ORD-2001",
+    "state": "completed",
+    "success": true,
+    "output": {
+        "order": {
+            "order_id": "ORD-2001",
+            "customer_id": "CUST-2001",
+            "amount": 4500.0,
+            "currency": "INR",
+            "items": [
+                "Keyboard",
+                "Mouse"
+            ]
+        },
+        "payment": {
+            "order_id": "ORD-2001",
+            "payment_id": "PAY-ORD-2001",
+            "amount": 4500.0,
+            "status": "completed",
+            "currency": "INR"
+        },
+        "shipping": {
+            "status": "shipment_created",
+            "shipment_id": "SHIP-ORD-2001",
+            "order_id": "ORD-2001"
+        }
+    },
+    "events": [
+        {
+            "event_id": "cf2865b3-e64f-4304-9634-9b4b1b3a1428",
+            "event_type": "order.validated",
+            "run_id": "RUN-ORD-2001",
+            "business_key": "ORD-2001",
+            "occurred_at": "2026-11-17T05:12:58.097099+00:00",
+            "schema_version": "1.0",
+            "payload": {
+                "order_id": "ORD-2001",
+                "customer_id": "CUST-2001",
+                "amount": 4500.0,
+                "currency": "INR",
+                "items": [
+                    "Keyboard",
+                    "Mouse"
+                ]
+            }
+        },
+        {
+            "event_id": "0577877f-cd16-4c03-9b76-3e4936e47993",
+            "event_type": "payment.completed",
+            "run_id": "RUN-ORD-2001",
+            "business_key": "ORD-2001",
+            "occurred_at": "2026-11-17T05:12:58.097259+00:00",
+            "schema_version": "1.0",
+            "payload": {
+                "order_id": "ORD-2001",
+                "payment_id": "PAY-ORD-2001",
+                "amount": 4500.0,
+                "status": "completed",
+                "currency": "INR"
+            }
+        }
+    ],
+    "delivery_log": [
+        {
+            "event_id": "cf2865b3-e64f-4304-9634-9b4b1b3a1428",
+            "event_type": "order.validated",
+            "consumer_count": 1,
+            "status": "delivered"
+        },
+        {
+            "event_id": "0577877f-cd16-4c03-9b76-3e4936e47993",
+            "event_type": "payment.completed",
+            "consumer_count": 1,
+            "status": "delivered"
+        }
+    ],
+    "workflow_trace": [
+        {
+            "run_id": "RUN-ORD-2001",
+            "event": "workflow.transition",
+            "state": "running",
+            "timestamp": "2026-11-17T05:12:58.096446+00:00",
+            "details": {
+                "trigger": "start",
+                "previous_state": "created",
+                "new_state": "running"
+            }
+        },
+        {
+            "run_id": "RUN-ORD-2001",
+            "event": "order.validated",
+            "state": "running",
+            "timestamp": "2026-11-17T05:12:58.097127+00:00",
+            "details": {
+                "event_id": "cf2865b3-e64f-4304-9634-9b4b1b3a1428",
+                "order_id": "ORD-2001"
+            }
+        },
+        {
+            "run_id": "RUN-ORD-2001",
+            "event": "payment.completed",
+            "state": "running",
+            "timestamp": "2026-11-17T05:12:58.097269+00:00",
+            "details": {
+                "event_id": "0577877f-cd16-4c03-9b76-3e4936e47993",
+                "payment_id": "PAY-ORD-2001"
+            }
+        },
+        {
+            "run_id": "RUN-ORD-2001",
+            "event": "shipment.created",
+            "state": "running",
+            "timestamp": "2026-11-17T05:12:58.097296+00:00",
+            "details": {
+                "shipment_id": "SHIP-ORD-2001",
+                "order_id": "ORD-2001"
+            }
+        },
+        {
+            "run_id": "RUN-ORD-2001",
+            "event": "workflow.transition",
+            "state": "completed",
+            "timestamp": "2026-11-17T05:12:58.097310+00:00",
+            "details": {
+                "trigger": "complete",
+                "previous_state": "running",
+                "new_state": "completed"
+            }
+        }
+    ],
+    "tasks": {
+        "validate": {
+            "name": "Validate Order",
+            "owner": "order_service",
+            "dependencies": [],
+            "status": "completed"
+        },
+        "payment": {
+            "name": "Process Payment",
+            "owner": "payment_service",
+            "dependencies": [
+                "validate"
+            ],
+            "status": "completed"
+        },
+        "shipping": {
+            "name": "Create Shipment",
+            "owner": "shipping_service",
+            "dependencies": [
+                "payment"
+            ],
+            "status": "completed"
+        }
+    },
+    "error": null
+}
+
+Evidence saved: outputs/task2_event_driven_workflow.json

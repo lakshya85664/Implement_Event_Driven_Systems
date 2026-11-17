@@ -1,0 +1,61 @@
+{
+    "assessment": "Implement Event-Driven Systems",
+    "generated_at": "2026-11-17T05:47:22.098071+00:00",
+    "evidence_summary": {
+        "total_required": 6,
+        "available": 6,
+        "missing_or_unreadable": 0,
+        "complete": true
+    },
+    "evidence": {
+        "task1_contract": {
+            "path": "outputs/task1_contract_output.txt",
+            "exists": true,
+            "readable": true,
+            "size_bytes": 2691,
+            "error": null
+        },
+        "task2_event_workflow": {
+            "path": "outputs/task2_event_driven_workflow.json",
+            "exists": true,
+            "readable": true,
+            "size_bytes": 4894,
+            "error": null
+        },
+        "task3_failure_recovery": {
+            "path": "outputs/task3_failure_recovery.json",
+            "exists": true,
+            "readable": true,
+            "size_bytes": 3231,
+            "error": null
+        },
+        "task3_recovery_trace": {
+            "path": "traces/task3_recovery_trace.json",
+            "exists": true,
+            "readable": true,
+            "size_bytes": 2085,
+            "error": null
+        },
+        "task4_observability": {
+            "path": "outputs/task4_observability.json",
+            "exists": true,
+            "readable": true,
+            "size_bytes": 1548,
+            "error": null
+        },
+        "task4_event_trace": {
+            "path": "traces/task4_events.jsonl",
+            "exists": true,
+            "readable": true,
+            "size_bytes": 509,
+            "error": null
+        }
+    },
+    "implementation_notes": [
+        "The event bus is an in-memory implementation.",
+        "Retry backoff is recorded by the retry executor; it is not a production scheduler.",
+        "Event deduplication and payment idempotency use in-memory state.",
+        "The payment gateway used in the integration demonstration is a fake adapter.",
+        "JSONL trace records are appended to the trace file."
+    ]
+}

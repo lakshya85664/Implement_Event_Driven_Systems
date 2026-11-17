@@ -1,0 +1,53 @@
+{
+    "payment_response": {
+        "order_id": "ORD-4001",
+        "amount": 4500,
+        "payment_id": "PAY-ORD-4001",
+        "status": "completed"
+    },
+    "status": {
+        "run_id": "RUN-OBS-4001",
+        "state": "completed",
+        "last_event": "payment.completed"
+    },
+    "trace": [
+        {
+            "trace_id": "9f1a5459-9b3f-4939-8afd-00f511351c51",
+            "run_id": "RUN-OBS-4001",
+            "event_type": "payment.started",
+            "state": "running",
+            "timestamp": "2026-11-17T05:20:40.067529+00:00",
+            "details": {
+                "order_id": "ORD-4001",
+                "amount": 4500
+            }
+        },
+        {
+            "trace_id": "20aa1928-40bf-4bdb-9214-c94acbd4c146",
+            "run_id": "RUN-OBS-4001",
+            "event_type": "payment.completed",
+            "state": "completed",
+            "timestamp": "2026-11-17T05:20:40.068018+00:00",
+            "details": {
+                "order_id": "ORD-4001",
+                "payment_id": "PAY-ORD-4001",
+                "latency_ms": 0.006
+            }
+        }
+    ],
+    "metrics": {
+        "counters": {
+            "payment.started": 1,
+            "events.payment.started": 1,
+            "payment.succeeded": 1,
+            "events.payment.completed": 1
+        },
+        "latency": {
+            "measurements": 1,
+            "total_ms": 0.006,
+            "average_ms": 0.006,
+            "max_ms": 0.006
+        },
+        "event_count": 2
+    }
+}

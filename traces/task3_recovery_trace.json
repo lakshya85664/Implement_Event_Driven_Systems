@@ -1,0 +1,65 @@
+{
+    "recovery": {
+        "success": true,
+        "attempts": 3,
+        "result": {
+            "status": "success",
+            "calls": 3
+        },
+        "next_action": "continue_workflow",
+        "trace": [
+            {
+                "attempt": 1,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": 1.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 2,
+                "outcome": "retryable_failure",
+                "error_type": "TransientDependencyError",
+                "error": "Temporary dependency failure",
+                "backoff_seconds": 2.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 3,
+                "outcome": "success",
+                "next_action": "continue"
+            }
+        ]
+    },
+    "retry_exhaustion": {
+        "success": false,
+        "attempts": 3,
+        "next_action": "operator_review",
+        "trace": [
+            {
+                "attempt": 1,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": 1.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 2,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": 2.0,
+                "next_action": "retry"
+            },
+            {
+                "attempt": 3,
+                "outcome": "retryable_failure",
+                "error_type": "DependencyTimeout",
+                "error": "Dependency operation timed out",
+                "backoff_seconds": null,
+                "next_action": "operator_review"
+            }
+        ]
+    }
+}

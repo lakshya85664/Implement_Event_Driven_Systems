@@ -1,0 +1,87 @@
+============================================================
+TOPIC 2 - TASK 1: EVENT-DRIVEN WORKFLOW CONTRACT
+============================================================
+{
+    "run_id": "RUN-EVENT-1001",
+    "business_key": "ORD-1001",
+    "state": "completed",
+    "order_event": {
+        "event_id": "48f63c61-bac7-429f-b74d-6261d2332939",
+        "event_type": "order.validated",
+        "run_id": "RUN-EVENT-1001",
+        "business_key": "ORD-1001",
+        "occurred_at": "2026-11-17T04:49:33.828820+00:00",
+        "schema_version": "1.0",
+        "payload": {
+            "order_id": "ORD-1001",
+            "customer_id": "CUST-1001",
+            "amount": 2500.0,
+            "currency": "INR",
+            "items": [
+                "Laptop Bag",
+                "Mouse"
+            ]
+        }
+    },
+    "tasks": {
+        "validate": {
+            "name": "Validate Order",
+            "owner": "order_service",
+            "dependencies": [],
+            "status": "pending"
+        },
+        "payment": {
+            "name": "Process Payment",
+            "owner": "payment_service",
+            "dependencies": [
+                "validate"
+            ],
+            "status": "pending"
+        },
+        "shipping": {
+            "name": "Create Shipment",
+            "owner": "shipping_service",
+            "dependencies": [
+                "payment"
+            ],
+            "status": "pending"
+        }
+    },
+    "events": [
+        {
+            "run_id": "RUN-EVENT-1001",
+            "event": "workflow.transition",
+            "state": "running",
+            "timestamp": "2026-11-17T04:49:33.828697+00:00",
+            "details": {
+                "trigger": "start",
+                "previous_state": "created",
+                "new_state": "running"
+            }
+        },
+        {
+            "run_id": "RUN-EVENT-1001",
+            "event": "event.created",
+            "state": "running",
+            "timestamp": "2026-11-17T04:49:33.828827+00:00",
+            "details": {
+                "event_id": "48f63c61-bac7-429f-b74d-6261d2332939",
+                "event_type": "order.validated"
+            }
+        },
+        {
+            "run_id": "RUN-EVENT-1001",
+            "event": "workflow.transition",
+            "state": "completed",
+            "timestamp": "2026-11-17T04:49:33.828833+00:00",
+            "details": {
+                "trigger": "complete",
+                "previous_state": "running",
+                "new_state": "completed"
+            }
+        }
+    ],
+    "processed_event_ids": []
+}
+
+Task 1 contract demonstration completed.
